@@ -61,6 +61,47 @@ This version uses server-side configuration for gradual rollout and A/B testing 
 
 ---
 
+## Guideline 2.5.19: Hidden, dormant, or undocumented features (added 2026-10-16)
+
+English version of the section above.
+
+**Guideline text (App Review Guidelines 2.5.19):**
+
+> Don’t include any hidden, dormant, or undocumented features in your app; your app’s functionality should be clear to end users and App Review. Attempting to hide undocumented features in your app binary, such as through code obfuscation or other methods, is grounds for removal of your app from the App Store and termination of your developer account.
+
+**Apple Developer News (2026-10-16):**
+
+- 2.5.19 clarifies the existing policy on hidden, dormant, or undocumented features. That policy was previously covered under Guideline 2.3.1.
+- Apps must not hide their purpose during App Review and then change behavior after approval (for example, by adding features that were not in the submitted version). A violation can lead to removal from the App Store and removal from the Apple Developer Program.
+
+> **Label:** The two checklists below are an **audit interpretation** of the guideline text and the News note above. They are not a line-by-line list from Apple. Remote Config / feature flags, and switching features by review account, IP, timezone, TestFlight, or similar signals, are not named in the guideline. They are common ways the “hidden, dormant, or undocumented features” rule and the bait-and-switch guidance show up in shipping apps. Apple says translations of the updated guidelines will be available within one month.
+
+### Checklist A | Remote Config / feature-flag disclosure
+
+| | Details |
+|--|------|
+| **What we check** | ① List every server-controlled switch (for example Firebase Remote Config, a custom config API, or an A/B platform). For each one, record the feature it affects, the default, and the current live value. ② Confirm each controlled feature is fully present in the binary under review, and that App Review can see it and complete the flow. Flags are only for gradual rollout, kill switches, or experiments, not for shipping features that were never reviewed. ③ Look for features that stay off by default and are turned on after approval, when that disagrees with the metadata (description, screenshots, category, age rating). ④ Check that App Review Notes describe the main remotely controlled features and how to trigger them. |
+| **Risk** | Turning on, after approval, a feature that was invisible during review or that disagrees with the metadata is the hidden / dormant / undocumented behavior 2.5.19 prohibits, and the bait-and-switch pattern Apple named. The result can go beyond rejection: removal from the App Store and termination of the developer account. |
+| **What to change** | Keep a switch inventory (feature, purpose, state at submission). At submission, leave user-facing features on, or give App Review a way to turn them on. Ship new user-facing features in a new version, not by flipping a flag. Metadata and the age-rating questionnaire must cover every feature that can be enabled. |
+
+**Sample App Review Notes:**
+
+```
+This version uses server-side configuration for gradual rollout and A/B testing of [feature]. All features are enabled for the review account. No functionality is hidden from App Review.
+```
+
+### Checklist B | Review-environment detection
+
+| | Details |
+|--|------|
+| **What we check** | ① Search the client and the server for branches that change features based on: a review or demo account, IP or region, device timezone or language, TestFlight or a sandbox receipt (`sandboxReceipt`, StoreKit environment), first-install time, or an “under review” version flag. ② Check for code obfuscation, encrypted strings, dynamically assembled routes, or WebView redirects used to hide that logic. ③ Separate legitimate uses: a sandbox check only for in-app purchase receipt validation, and a region check only for compliance or content rights. Those checks must not change the feature set the reviewer sees. |
+| **Risk** | Showing one feature set to App Review and another to ordinary users is the usual way to hide a purpose during review. 2.5.19 explicitly treats hiding undocumented features through code obfuscation or other methods as grounds for removal and termination of the developer account. (**Interpretation:** the guideline does not list IP, timezone, or TestFlight checks one by one. Those sit inside a fair reading of “other methods.”) |
+| **What to change** | Remove feature branches that key off “are we in review?”. The review environment and production users should see the same features. Keep sandbox / TestFlight checks only for technical uses such as receipt validation. If a regional difference is real (compliance or rights), explain the difference and the reason in App Review Notes. The review account should have the same permissions as a normal account. If you preload data, say so in the Notes. |
+
+*This module is a pre-submission risk check. It does not guarantee approval and is not legal advice.*
+
+---
+
 ## 定价
 
 **¥349 / 次**（约等于 $49，固定价小包）
