@@ -2,23 +2,25 @@
 
 **面向用 Lovable / Bolt / v0 / Cursor 等工具生成、准备上架 App Store 的独立开发者。**
 
-我提供一份**原生 Swift 视角的书面审计报告**（邮箱或 GitHub Issue 交付），在你点「提交审核」之前，标出最容易翻车的点——**不做代上架、不做拒审后专修**。
+我提供一份**原生 Swift 视角的书面审计报告**（邮箱或 GitHub Issue 交付），在你点「提交审核」之前，标出最容易翻车的点——**不做代上架、不做拒审后的代改代码和长期跟进**。
 
 ---
 
 ## 服务包含什么
 
+¥349 一次，交付一份人工写的 App Store 提审前审计报告。工具能扫出来的（比如 release 包里的测试开关字符串）我会先跑一遍，但你付钱买的是下面这些需要人判断的部分。
+
 | 模块 | 你拿到什么 |
 |------|------------|
-| 崩溃与稳定性 | 启动路径、常见崩溃点、后台/权限相关风险清单 |
-| Guideline 4.2 | 是否像「壳应用」、最小功能完整度、与网页包装的差异说明 |
-| Guideline 2.5.19 | 远程配置 / Feature Flag 披露、审核环境检测（隐藏/休眠/未说明功能） |
-| 签名 / 能力 / 隐私 | Bundle ID、Capabilities、Privacy Manifest、权限文案是否自洽 |
-| 截图与文案 | 商店截图、副标题、描述是否与真实功能一致、易触发拒审的表述 |
+| 开关与远程配置的灰区判断 | 逐个看你的 Feature Flag、Remote Config、A/B 实验，按 Guideline 2.5.19 和 2.3.1 给出风险判断和处理建议。注意：这是审计解读，不是 Apple 原文；Apple 目前没有明确说哪些开关算违规。 |
+| Notes for Review 代写 | 按 2.3.1(a) 的要求，帮你写好 App Review Information 里的 Notes for Review（中英各一版）：新功能说明、测试账号用法、非显而易见功能的进入路径。 |
+| Paywall 录屏清单 | 告诉你每个 paywall 版本要录哪些画面、按什么顺序录、配什么文字说明。录屏由你自己完成。 |
+| 被拒后的回复模板 | Resolution Center 回复和 App Review 申诉（appeal）的模板，按常见拒审条款分类，你填入自己的情况即可。 |
+| 商店页检查 | 元数据是否提到 Android 等其他移动平台（2.3.10）；名称或描述是否用了 “For Kids” 一类词（按 2.3.8 为 Kids Category 保留）；内置浏览器是否影响年龄分级问卷里的 Unrestricted Web Access（2.3.6）。 |
 
-交付物：一份结构化 Markdown/PDF 报告 + 按优先级排序的修改清单（P0 / P1 / P2）。
+交付物：一份 Markdown/PDF 报告，附按优先级排好的修改清单（P0 / P1 / P2）。付款后 2 天出初稿。
 
-**明确不含：** 代提交审核、代改代码到过审、5.1.2(i) 账号类拒审专修、长期 retainer。
+**不包含：** 代提审、代改代码、长期跟进。**不保证过审**——最终结果由 App Review 决定。报告是提审前的风险检查，不构成法律意见。
 
 ---
 
@@ -99,6 +101,24 @@ This version uses server-side configuration for gradual rollout and A/B testing 
 | **What to change** | Remove feature branches that key off “are we in review?”. The review environment and production users should see the same features. Keep sandbox / TestFlight checks only for technical uses such as receipt validation. If a regional difference is real (compliance or rights), explain the difference and the reason in App Review Notes. The review account should have the same permissions as a normal account. If you preload data, say so in the Notes. |
 
 *This module is a pre-submission risk check. It does not guarantee approval and is not legal advice.*
+
+---
+
+## What's included
+
+¥349 (about $49) per audit. You get a hand-written App Store pre-submission report. I run the usual automated checks first (like scanning a release build for leftover test switch strings), but what you're paying for is the judgment calls below.
+
+| Area | What you get |
+|------|--------------|
+| Feature flags & remote config | I go through your feature flags, Remote Config, and A/B tests and tell you where the risk is under Guidelines 2.5.19 and 2.3.1, and what to do about it. This is my reading as an auditor, not Apple's wording — Apple hasn't said exactly which switches cross the line. |
+| Notes for Review, written for you | Notes for Review in App Review Information, in English and Chinese, written to meet 2.3.1(a): what's new, how to use the demo account, and how to reach anything that isn't obvious. |
+| Paywall recording checklist | For each paywall variant: which screens to record, in what order, and what to write alongside it. You do the recording. |
+| Rejection reply templates | Templates for Resolution Center replies and App Review appeals, grouped by common rejection guidelines. Fill in your specifics. |
+| Product page check | Mentions of Android or other mobile platforms in metadata (2.3.10); terms like “For Kids” that are reserved for the Kids Category (2.3.8); whether an in-app browser changes your Unrestricted Web Access answer on the age rating questionnaire (2.3.6). |
+
+Deliverable: a Markdown/PDF report plus a prioritized fix list (P0 / P1 / P2). First draft within 2 days of payment.
+
+**Not included:** submitting for you, changing your code, ongoing support. **No approval guarantee** — App Review makes the call. This is a pre-submission risk review, not legal advice.
 
 ---
 
